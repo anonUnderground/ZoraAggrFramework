@@ -5,11 +5,11 @@ from gql import gql, Client
 from gql.transport.aiohttp import AIOHTTPTransport
 import pandas as pd
 import json
-import pygsheets
+# import pygsheets
 import requests
 
 #Pass google sheets service authentication
-gc = pygsheets.authorize(service_file='/Users/yourfilepath/googleservice.json') #Google service authenication JSON, see read me for more info
+# gc = pygsheets.authorize(service_file='/Users/yourfilepath/googleservice.json') #Google service authenication JSON, see read me for more info
 
 # Select your transport with a defined url endpoint
 transport = AIOHTTPTransport(url="https://api.zora.co/graphql")
@@ -19,7 +19,9 @@ client = Client(transport=transport, fetch_schema_from_transport=True)
 
 #Define MusicNFT_DF
 
-MusicNFT_DF = pd.DataFrame(columns=['platform','artist','project','songTitle','bpm','key','genre','tags','locationCreated','originalReleaseDate', 'recordLabel','publisher','license', 'image', 'losslessAudio', 'duration'])
+MusicNFT_DF = pd.DataFrame(columns=['platform','artist','project','songTitle','bpm','key',
+                                    'genre','tags','locationCreated','originalReleaseDate', 'recordLabel',
+                                    'publisher','license', 'image', 'losslessAudio', 'duration'])
 
 # Mint songs: 0x2B5426A5B98a3E366230ebA9f95a24f09Ae4a584
 # Catalog: 0x0bC2A24ce568DAd89691116d5B34DEB6C203F342
@@ -124,8 +126,11 @@ while hasNextPage == True:
         losslessAudio = df['mints'][0][i]['token']['metadata']['losslessAudio']
         duration = df['mints'][0][i]['token']['metadata']['duration']
 
-        tempData = [[platform,artist,projectTitle,songTitle,bpm,key,genre,tags,locationCreated,originalReleaseDate,recordLabel,publisher,license, image, losslessAudio, duration]]
-        temp_MusicNFT_DF = pd.DataFrame(tempData, columns=['platform','artist','project','songTitle','bpm','key','genre','tags','locationCreated','originalReleaseDate','recordLabel','publisher','license', 'image','losslessAudio', 'duration'])
+        tempData = [[platform,artist,projectTitle,songTitle,bpm,key,genre,tags,locationCreated,
+                     originalReleaseDate,recordLabel,publisher,license, image, losslessAudio, duration]]
+        temp_MusicNFT_DF = pd.DataFrame(tempData, columns=['platform','artist','project','songTitle','bpm','key',
+                            'genre','tags','locationCreated','originalReleaseDate','recordLabel',
+                            'publisher','license', 'image','losslessAudio', 'duration'])
 
         MusicNFT_DF = pd.concat([MusicNFT_DF,temp_MusicNFT_DF])
 
@@ -246,8 +251,13 @@ while hasNextPage == True:
         losslessAudio = df['mints'][0][i]['token']['metadata']['losslessAudio']
         duration = df['mints'][0][i]['token']['metadata']['duration']
 
-        tempData = [[platform,artist,projectTitle,songTitle,bpm,key,genre,tags,locationCreated,originalReleaseDate,recordLabel,publisher,license, image, losslessAudio, duration]]
-        temp_MusicNFT_DF = pd.DataFrame(tempData, columns=['platform','artist','project','songTitle','bpm','key','genre','tags','locationCreated','originalReleaseDate','recordLabel','publisher','license', 'image','losslessAudio', 'duration'])
+        tempData = [[platform,artist,projectTitle,songTitle,bpm,
+                     key,genre,tags,locationCreated,originalReleaseDate,
+                     recordLabel,publisher,license, image, 
+                     losslessAudio, duration]]
+        temp_MusicNFT_DF = pd.DataFrame(tempData, columns=['platform','artist','project','songTitle','bpm','key',
+                                                           'genre','tags','locationCreated','originalReleaseDate','recordLabel',
+                                                           'publisher','license', 'image','losslessAudio', 'duration'])
 
         MusicNFT_DF = pd.concat([MusicNFT_DF,temp_MusicNFT_DF])
 
@@ -324,8 +334,11 @@ image = df['mints'][0][1]['token']['metadata']['image']
 losslessAudio = None
 duration = None
 
-tempData = [[platform,artist,projectTitle,songTitle,bpm,key,genre,tags,locationCreated,originalReleaseDate,recordLabel,publisher,license, image, losslessAudio, duration]]
-temp_MusicNFT_DF = pd.DataFrame(tempData, columns=['platform','artist','project','songTitle','bpm','key','genre','tags','locationCreated','originalReleaseDate','recordLabel','publisher','license', 'image','losslessAudio', 'duration'])
+tempData = [[platform,artist,projectTitle,songTitle,bpm,key,genre,tags,locationCreated,
+             originalReleaseDate,recordLabel,publisher,license, image, losslessAudio, duration]]
+temp_MusicNFT_DF = pd.DataFrame(tempData, columns=['platform','artist','project','songTitle','bpm','key','genre',
+                                                   'tags','locationCreated','originalReleaseDate','recordLabel',
+                                                   'publisher','license', 'image','losslessAudio', 'duration'])
 
 MusicNFT_DF = pd.concat([MusicNFT_DF,temp_MusicNFT_DF])
 
@@ -384,8 +397,8 @@ for z in range(len(MusicNFT_DF)):
 
 #Push dataframe to google sheets
 
-sh = gc.open('"Name of your google sheets"') #It will paste the dataframe on the first sheet
+# sh = gc.open('"Name of your google sheets"') #It will paste the dataframe on the first sheet
 
-MusicNFT_DF_gs = sh[0]
+# MusicNFT_DF_gs = sh[0]
 
-MusicNFT_DF_gs.set_dataframe(MusicNFT_DF,(1,1))
+# MusicNFT_DF_gs.set_dataframe(MusicNFT_DF,(1,1))
